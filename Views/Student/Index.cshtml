@@ -1,0 +1,49 @@
+@model List<wt_lab4_4mvc_vasileva.Models.Student>
+
+@{
+    ViewData["Title"] = "Студенты";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold">Каталог студентов</h1>
+            <p class="text-muted">Система управления студентами</p>
+        </div>
+        <a asp-action="Create" class="btn btn-primary">
+            + Добавить студента
+        </a>
+    </div>
+
+    <p class="fs-5">Всего: <span class="badge bg-secondary">@Model.Count</span></p>
+
+    <div class="row g-4">
+        @foreach (var student in Model)
+        {
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm rounded-4">
+                    <div class="card-body">
+                        <span class="badge bg-secondary mb-2">ID: @student.Id</span>
+                        <h5 class="card-title">@student.FullName</h5>
+                        <p class="mb-1">Группа: <strong>@student.Group</strong></p>
+                        <p class="mb-1">Ср. балл: <strong>@student.AverageGrade.ToString("F2")</strong></p>
+                        <p class="text-muted small mb-3">Год поступления: @student.EnrollmentYear</p>
+                       <div class="d-flex gap-2 flex-wrap">
+    <a asp-action="Details" asp-route-id="@student.Id"
+       class="btn btn-outline-primary btn-sm">Подробнее</a>
+
+    <a asp-action="Edit" asp-route-id="@student.Id"
+       class="btn btn-outline-warning btn-sm">Изменить</a>
+
+    <form asp-action="Delete" asp-route-id="@student.Id" method="post"
+          class="d-inline"
+          onsubmit="return confirm('Удалить студента?');">
+        <button type="submit" class="btn btn-outline-danger btn-sm">Удалить</button>
+    </form>
+</div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
